@@ -5,14 +5,11 @@ import os
 
 from forms import AdoptionForm, EditPetForm
 
-username = os.environ["PGUSER"]
-password = os.environ["PGPASSWORD"]
-secret_key = os.environ.get("SECRET_KEY", "default_secret_key")
-
 app = Flask(__name__)
 
 app.config["SECRET_KEY"] = secret_key
-app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{username}:{password}@localhost:5432/adoptions"
+app.config["SQLALCHEMY_DATABASE_URI"] = (
+    os.environ.get('DATABASE_URL', 'postgresql:///adoptions'))
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SQLALCHEMY_ECHO"] = True
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
